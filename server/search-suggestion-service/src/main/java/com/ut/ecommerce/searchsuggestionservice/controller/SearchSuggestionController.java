@@ -1,6 +1,6 @@
 package com.ut.ecommerce.searchsuggestionservice.controller;
 
-import com.ut.ecommerce.searchsuggestionservice.model.SearchSuggestionResponse;
+import com.ut.ecommerce.searchsuggestionservice.model.SearchSuggestionItem;
 import com.ut.ecommerce.searchsuggestionservice.service.SearchSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class SearchSuggestionController {
@@ -21,14 +22,20 @@ public class SearchSuggestionController {
     }
 
     @GetMapping("/search-suggestion")
-    public ResponseEntity<SearchSuggestionResponse> getSuggestions(@RequestParam("q") String prefix) {
+    public ResponseEntity<List<SearchSuggestionItem>> getSuggestions(@RequestParam("q") String prefix) {
         List<String> suggestions = searchSuggestionService.getSuggestionsByPrefix(prefix);
-        return ResponseEntity.ok(new SearchSuggestionResponse(suggestions));
+        List<SearchSuggestionItem> items = suggestions.stream()
+            .map(keyword -> new SearchSuggestionItem(keyword, keyword.toLowerCase().replace(" ", "-")))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping("/default-search-suggestion")
-    public ResponseEntity<SearchSuggestionResponse> getDefaultSuggestions() {
+    public ResponseEntity<List<SearchSuggestionItem>> getDefaultSuggestions() {
         List<String> suggestions = searchSuggestionService.getDefaultSuggestions();
-        return ResponseEntity.ok(new SearchSuggestionResponse(suggestions));
+        List<SearchSuggestionItem> items = suggestions.stream()
+            .map(keyword -> new SearchSuggestionItem(keyword, keyword.toLowerCase().replace(" ", "-")))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(items);
     }
 }
