@@ -102,6 +102,7 @@ services:
     environment:
       - PORT=${SEARCH_SUGGESTION_SERVICE_PORT}
       - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - COMMON_DATA_SERVICE_PORT=${COMMON_DATA_SERVICE_PORT}
       - DB_HOST=mysql
       - DB_PORT=${DB_PORT}
       - DB_SCHEMA=${DB_SCHEMA}
