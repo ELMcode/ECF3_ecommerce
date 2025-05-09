@@ -5,16 +5,16 @@ FROM node:14
 WORKDIR /app
 
 # Copy dependencies
-COPY package.json package-lock.json ./
+COPY package.json yarn.lock ./
 
 # Install dependencies
-RUN npm install
+RUN yarn install
 
 # Copy rest of the files
 COPY . .
 
 # Build the application in dev mode
-RUN npm run build_dev
+RUN yarn build_dev
 
 # Use Nginx to serve the built application
 FROM nginx:alpine
