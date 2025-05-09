@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SearchSuggestionItem {
     private String keyword; // The suggested keyword
-    private String url; // The corresponding URL (slug for routing)
+    private String link; // The corresponding link (slug for routing)
 }
