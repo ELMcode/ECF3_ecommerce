@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS search_suggestion (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  keyword VARCHAR(255) NOT NULL,
+  is_default BOOLEAN DEFAULT FALSE,
+  search_count INT DEFAULT 0
+);
