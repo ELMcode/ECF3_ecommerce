@@ -8,6 +8,35 @@ Ce document fournit les étapes nécessaires pour déployer l'ensemble de l'appl
 - Docker Compose (version 2.0 ou supérieure)
 - Git
 
+## Environnement technique
+
+### Stack technologique
+
+**Frontend** :
+
+- Node.js 14 pour la compatibilité avec react-scripts 3.4.4
+- React 16.13.0 pour l'interface utilisateur
+- Yarn comme gestionnaire de paquets
+- Nginx comme serveur web (dans le conteneur Docker)
+
+**Backend** :
+
+- Java 11 pour tous les microservices
+- Spring Boot 2.3.0 comme framework d'application
+- Maven 3.8.4 pour la gestion des dépendances et le build
+
+**Infrastructure** :
+
+- MySQL 8.0 pour la persistance des données relationnelles
+- Redis 6.2-alpine pour le cache et la gestion des sessions
+- Docker Engine et Docker Compose pour la conteneurisation
+
+### Dépendances
+
+- **Redis** : Utilisé par les services d'authentification et de données communes, requiert une configuration avec mot de passe
+- **Variables d'environnement React** : Injectées au moment de la compilation avec le script `build_dev`
+- **JWT** : Utilisé par le service d'authentification pour les tokens
+
 ## Architecture de l'application
 
 L'application est composée des services suivants :
@@ -146,15 +175,7 @@ docker compose restart [nom-du-service]
 docker compose down
 ```
 
-## Infos techniques
-
-### Frontend React
-
-- Le frontend utilise un build en deux étapes avec Node.js pour la construction et Nginx pour servir l'application
-- **Yarn** est utilisé comme gestionnaire de paquets au lieu de npm
-- Le Dockerfile exécute `yarn build_dev` pour incorporer les variables d'environnement du fichier `.env` au moment de la compilation
-
-#### Déploiement en mode production
+## Déploiement en production
 
 Pour déployer l'application en mode production (au lieu du mode développement) :
 
@@ -165,15 +186,3 @@ Pour déployer l'application en mode production (au lieu du mode développement)
 
 - Soit utiliser un script de substitution de variables au démarrage du conteneur
 - Soit utiliser une bibliothèque comme `react-env` qui permet d'injecter des variables d'environnement au runtime
-
-### Microservices Spring Boot
-
-- Les microservices utilisent Java 11 avec Spring Boot 2.3.0
-- Le common-data-service utilise Redis pour la mise en cache des données fréquemment accédées
-- L'authentication-service gère les JWT pour l'authentification
-- Le nouveau search-suggestion-service fournit des suggestions de recherche à partir de la base de données
-
-### Infrastructure
-
-- MySQL 8.0 stocke toutes les données de l'application
-- Redis 6.2-alpine sert de cache et de gestionnaire de sessions
