@@ -1,6 +1,6 @@
 package com.ut.ecommerce.searchsuggestionservice.controller;
 
-import com.ut.ecommerce.searchsuggestionservice.model.SearchSuggestionItem;
+import com.ut.ecommerce.searchsuggestionservice.dto.SearchSuggestionItem;
 import com.ut.ecommerce.searchsuggestionservice.service.SearchSuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
